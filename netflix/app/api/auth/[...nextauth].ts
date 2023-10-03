@@ -4,8 +4,8 @@ import GoogleProvider from 'next-auth/providers/google';
 import Credentials from 'next-auth/providers/credentials';
 // import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { compare } from 'bcrypt';
-import prismadb from '@/libs/prismadb';
-
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient()
 export const authOptions: AuthOptions = {
   providers: [
     GithubProvider({
@@ -34,7 +34,7 @@ export const authOptions: AuthOptions = {
           throw new Error('Email and password required');
         }
 
-        const user = await prismadb.user.findUnique({ where: {
+        const user = await prisma.user.findUnique({ where: {
           email: credentials.email
         }});
 

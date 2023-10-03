@@ -1,6 +1,7 @@
 "use client";
 import Input from '@/components/input'
 import React,{useCallback, useState} from 'react'
+import { signIn } from 'next-auth/react';
 import axios from 'axios'
 const Auth = () => {
   const [email ,setEmail] = useState('')
@@ -20,7 +21,20 @@ const Auth = () => {
     } catch (error) {
       console.log(error)
     }
-  },[])
+  },[name,email,password])
+
+  const login = useCallback(async ()=>{
+    try {
+      await signIn('credentials',{
+        email,
+        password,
+        redirect:false,
+        callbackUrl:'/'
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  },[email,password])
   return (
     <div className="relative h-full w-full bg-[url('/images/hero.jpg')] bg-no-repeat bg-center bg-fixed bg-cover">
     <div className="bg-black h-full w-full lg:bg-opacity-50">
@@ -36,7 +50,7 @@ const Auth = () => {
       <Input label='Email' onChange={(ev:any)=>setName(ev.target.value)} id='email' type='email' value={name}/>
       <Input label='Password' onChange={(ev:any)=>setPassword(ev.target.value)} id='password' type='password' value={password}/>
     </div>
-    <button className='bg-red-600 py-3 text-white rounded-md mt-6 w-full hover:bg-red-700 transition'>
+    <button onClick={ varient == 'login'? login: register} className='bg-red-600 py-3 text-white rounded-md mt-6 w-full hover:bg-red-700 transition'>
       {varient == 'login'? 'Login':"Sign up"}
       </button>
       <p className='text-neutral-500 mt-6'>
