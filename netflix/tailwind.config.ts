@@ -6,14 +6,14 @@ const config: Config = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
-  // theme: {
-  //   extend: {
-  //     backgroundImage: {
-  //       'hero-pattern': "url('/images/hero.jpg')",
-  //       'footer-texture': "url('/img/footer-texture.png')",
-  //     },
-  //   },
-  // },
+  theme: {
+    extend: {
+      backgroundImage: {
+        'hero-pattern': "url('/images/hero.jpg')",
+        'footer-texture': "url('/img/footer-texture.png')",
+      },
+    },
+  },
   plugins: [],
 }
 export default config
