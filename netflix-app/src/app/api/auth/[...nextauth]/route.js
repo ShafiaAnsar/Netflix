@@ -21,6 +21,7 @@ const authOptions = {
     },
   },
   secret: "default_secret_key",
+  
 };
 
 const handler = NextAuth(authOptions);

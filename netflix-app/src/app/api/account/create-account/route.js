@@ -1,41 +1,57 @@
-import connectDB from "@/database";
+import connectToDB from "@/database";
 import Account from "@/models/Account";
+import { hash } from "bcryptjs";
 import { NextResponse } from "next/server";
 
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";
 
-export async function POST(req){
-    try {
-        await connectDB()
-        const {uid,name,pin} =await req.json()
-        const isAccountAlreadyExist = await Account.find({uid,name})
-        const {searchParams} = new URL(req.url)
-        const {id} = searchParams.get('id')
-        const getAllAccounts = await Account.find({uid:id})
-        if(getAllAccounts){
-            return NextResponse.json({
-                success:true,
-                data:getAllAccounts
-            })
-        }else{
-            return NextResponse.json({
-                success:false,
-                message:'Something went wrong'
-            })
-        }
-        if(isAccountAlreadyExist){
-            return NextResponse.json({
-                success:false,
-                message:"Please try with a different name"
-            }) 
-        }
+export async function POST(req) {
+  try {
+    await connectToDB();
 
-    } catch (error) {
-        console.log(error)
-        return NextResponse.json({
-            success:false,
-            message:"Something went wrong"
-        })
+    const { name, pin, uid } = await req.json();
+
+    const isAccountAlreadyExists = await Account.find({ uid, name });
+    console.log(isAccountAlreadyExists);
+    const allAccounts = await Account.find({});
+    if (isAccountAlreadyExists && isAccountAlreadyExists.length > 0) {
+      return NextResponse.json({
+        success: false,
+        message: "Please try with a different name",
+      });
     }
 
+    if (allAccounts && allAccounts.length === 4) {
+      return NextResponse.json({
+        success: false,
+        message: "You can only add max 4 accounts",
+      });
+    }
+
+    const hashPin = await hash(pin, 12);
+
+    const newlyCreatedAccount = await Account.create({
+      name,
+      pin: hashPin,
+      uid,
+    });
+
+    if (newlyCreatedAccount) {
+      return NextResponse.json({
+        success: true,
+        message: "Account created successfully",
+      });
+    } else {
+      return NextResponse.json({
+        success: false,
+        message: "Something Went wrong",
+      });
+    }
+  } catch (e) {
+    console.log(e);
+    return NextResponse.json({
+      success: false,
+      message: "Something Went wrong",
+    });
+  }
 }
