@@ -9,7 +9,7 @@ export default function Browse  () {
   if (session == null) return <UnauthPage/>
 
   return (
-    <div>Browse</div>
+    <div className='text-blue'>Browse</div>
   )
 }
 
