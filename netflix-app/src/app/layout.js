@@ -1,4 +1,4 @@
-import GlobalState from "@/context";
+import GlobalState from "../context/index";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import NextAuthProvider from "../auth-provider/index";
@@ -15,9 +15,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <NextAuthProvider>
-          {/* <GlobalState> */}
+          <GlobalState> 
             {children}
-            {/* </GlobalState> */}
+            </GlobalState>
         </NextAuthProvider>
       </body>
     </html>

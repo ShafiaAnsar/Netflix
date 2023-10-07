@@ -1,9 +1,11 @@
 'use client'
 
+import { signIn } from "next-auth/react"
+
 export default function UnauthPage(){
     return (
         <div>
-        <button>Sign In</button>
+        <button onClick={ () => signIn('github')}>Sign In</button>
         </div>
     )
 }
