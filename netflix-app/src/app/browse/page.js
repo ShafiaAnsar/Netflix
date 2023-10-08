@@ -8,7 +8,7 @@ import ManageAccounts from '@/components/manage-accounts'
 export default function Browse  () {
 const {loggedInAccount} = useContext(GlobalContext)
   const {data:session} = useSession()
-  console.log(session)
+  // console.log(session)
   if (session == null) return <UnauthPage/>
 if(loggedInAccount === null) return <ManageAccounts/>
   return (
