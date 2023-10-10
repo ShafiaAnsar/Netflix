@@ -4,6 +4,7 @@ import UnauthPage from '../../components/unauth-page/index'
 import { useSession } from "next-auth/react"
 import { GlobalContext } from '@/context'
 import ManageAccounts from '@/components/manage-accounts'
+import CommonLayout from '@/components/common-layout'
 
 export default function Browse  () {
 const {loggedInAccount} = useContext(GlobalContext)
@@ -12,7 +13,9 @@ const {loggedInAccount} = useContext(GlobalContext)
   if (session == null) return <UnauthPage/>
 if(loggedInAccount === null) return <ManageAccounts/>
   return (
-    <div className='text-blue'>Browse</div>
+    <main className='flex flex-col min-h-screen'>
+      <CommonLayout/>
+    </main>
   )
 }
 
