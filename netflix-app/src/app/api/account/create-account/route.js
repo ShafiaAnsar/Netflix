@@ -21,7 +21,7 @@ export async function POST(req) {
       });
     }
 
-    if (allAccounts && allAccounts.length === 4) {
+    if (allAccounts && allAccounts.length === 5) {
       return NextResponse.json({
         success: false,
         message: "You can only add max 4 accounts",
