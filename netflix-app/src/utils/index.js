@@ -43,6 +43,22 @@ export const getTopratedMedias = async (type) => {
       console.log(error);
     }
   };
+  export const getTVorMoviesByGenre = async (type, id) => {
+    try {
+      const res = await fetch(
+        `${BASE_URL}/discover/${type}?api_key=${API_KEY}&language=en-US&include_adult=false&sort_by=popularity.desc&with_genres=${id}`,
+        {
+          method: "GET",
+        }
+      );
+  
+      const data = await res.json();
+  
+      return data && data.results;
+    } catch (e) {
+      console.log(e);
+    }
+  };
   export const getAllfavorites = async (uid, accountID) => {
     try {
       const res = await fetch(
