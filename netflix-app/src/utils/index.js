@@ -59,6 +59,22 @@ export const getTopratedMedias = async (type) => {
       console.log(e);
     }
   };
+  export const getTVorMovieVideosByID = async (type, id) => {
+    try {
+      const res = await fetch(
+        `${BASE_URL}/${type}/${id}/videos?api_key=${API_KEY}&language=en-US&append_to_response=videos`,
+        {
+          method: "GET",
+        }
+      );
+  
+      const data = await res.json();
+  
+      return data;
+    } catch (e) {
+      console.log(e);
+    }
+  };
   export const getAllfavorites = async (uid, accountID) => {
     try {
       const res = await fetch(

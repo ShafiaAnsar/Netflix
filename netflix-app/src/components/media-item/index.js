@@ -1,5 +1,4 @@
 'use client'
-import { CheckBadgeIcon } from '@heroicons/react/24/outline';
 import {motion} from 'framer-motion'
 import Image from 'next/image'
 import {
@@ -7,10 +6,12 @@ import {
     ChevronDownIcon,
     CheckIcon,
   } from "@heroicons/react/24/outline";
+import { useRouter } from 'next/navigation';
 const baseUrl = "https://image.tmdb.org/t/p/w500";
 
 export default function MediaItem({media, title}){
 
+  const router = useRouter()
     return <motion.div
     initial={{ opacity: 0, scale: 0.5 }}
     animate={{ opacity: 1, scale: 1 }}
@@ -26,6 +27,7 @@ export default function MediaItem({media, title}){
             alt='Media'
             layout='fill'
             className='rounded sm object-cover hover:rounded-sm md:rounded '
+            onClick={()=>router.push(`/watch/${media?.type}/${media?.id}`)}
             />
              <div className='space-x-3 hidden absolute p-2 bottom-0 buttonWrapper '>
             <button  className={`${
