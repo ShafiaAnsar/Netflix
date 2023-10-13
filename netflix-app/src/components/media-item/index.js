@@ -1,6 +1,8 @@
 'use client'
 import {motion} from 'framer-motion'
 import Image from 'next/image'
+import { useContext } from 'react';
+import {GlobalContext} from '@/context'; 
 import {
     PlusIcon,
     ChevronDownIcon,
@@ -10,6 +12,7 @@ import { useRouter } from 'next/navigation';
 const baseUrl = "https://image.tmdb.org/t/p/w500";
 
 export default function MediaItem({media, title}){
+  const {currentMediaInfoIdAndType,setCurrentMediaInfoIdAndType,showDetailsPopup, setShowDetailsPopup} = useContext(GlobalContext)
 
   const router = useRouter()
     return <motion.div
@@ -39,7 +42,14 @@ export default function MediaItem({media, title}){
                 :<PlusIcon color='#fff' className='h-7 w-7'/>
                 }
             </button>
-            <button  className="cursor-pointer p-2 border flex items-center gap-x-2 rounded-full  text-sm font-semibold transition hover:opacity-90  border-white  bg-black opacity-75 "
+            <button  
+            onClick={()=>{
+              setShowDetailsPopup(true)
+            setCurrentMediaInfoIdAndType({
+              type:media?.type,
+              id:media?.id
+            })}}
+            className="cursor-pointer p-2 border flex items-center gap-x-2 rounded-full  text-sm font-semibold transition hover:opacity-90  border-white  bg-black opacity-75 "
           >
                 <ChevronDownIcon color='#fff' className='h-7 w-7'/>
             </button>

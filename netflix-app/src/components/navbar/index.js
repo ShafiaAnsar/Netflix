@@ -1,79 +1,89 @@
-'use client'
+"use client";
 
-import { signOut, useSession } from "next-auth/react"
-import { usePathname,useRouter } from "next/navigation"
-import { useContext, useEffect, useState } from "react"
-import Search from "./search"
-import {AiOutlineSearch} from 'react-icons/ai'
-import { GlobalContext } from "@/context"
-import AccountPopup from "./account-popup"
+import { signOut, useSession } from "next-auth/react";
+import { usePathname, useRouter } from "next/navigation";
+import { useContext, useEffect, useState } from "react";
+import Search from "./search";
+import { AiOutlineSearch } from "react-icons/ai";
+import { GlobalContext } from "@/context";
+import AccountPopup from "./account-popup";
+import DetailsPopup from "../details-popup";
 
-export default function Navbar(){
-    const {data:session} = useSession()
-    const [isScrolled,setIsScrolled] = useState(false)
-    const [searchQuery,setSearchQuery] = useState('')
-    const [showSearchBar , setShowSearchBar] = useState(false)
-    const [showAccountPopup, setShowAccountPopup] = useState(false)
-    const router = useRouter ()
-    const pathName = usePathname()
-    const {setPageLoader,loggedInAccount,setAccounts,setLoggedInAccount,accounts} = useContext(GlobalContext)
-    const menuItems = [
-        {
-            id:'home',
-            title:"Home",
-            path:'/browse'
-        },
-        {
-            id:'tv',
-            title:"TV",
-            path:'/tv'
-        },
-        {
-            id:'movies',
-            title:"Movies",
-            path:'/movies'
-        },
-        {
-            id:'my-list',
-            title:"My List",
-            path:'/mylist'
-        },
-    ]
-    useEffect(()=>{
-        const handleScroll = ()=>{
-            if(window.scrollY > 0 ) setIsScrolled(true)
-            else setIsScrolled(false)
-        }
-        window.addEventListener('scroll',handleScroll)
-        return ()=>{
-            window.removeEventListener('scroll' ,handleScroll)
-        }
-    })
-    async function getAllAccounts() {
-      const res = await fetch(
-        `/api/account/get-all-accounts?id=${session?.user?.uid}`,
-        {
-          method: "GET",
-        }
-      );
-  
-      const data = await res.json();
-  
-      console.log(data);
-  
-      if (data && data.data && data.data.length) {
-        setAccounts(data.data);
-        setPageLoader(false);
-      } else {
-        setPageLoader(false);
+export default function Navbar() {
+  const { data: session } = useSession();
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showSearchBar, setShowSearchBar] = useState(false);
+  const [showAccountPopup, setShowAccountPopup] = useState(false);
+  const router = useRouter();
+  const pathName = usePathname();
+  const {
+    setPageLoader,
+    loggedInAccount,
+    setAccounts,
+    setLoggedInAccount,
+    accounts,
+    showDetailsPopup,
+    setShowDetailsPopup
+  } = useContext(GlobalContext);
+  const menuItems = [
+    {
+      id: "home",
+      title: "Home",
+      path: "/browse",
+    },
+    {
+      id: "tv",
+      title: "TV",
+      path: "/tv",
+    },
+    {
+      id: "movies",
+      title: "Movies",
+      path: "/movies",
+    },
+    {
+      id: "my-list",
+      title: "My List",
+      path: "/mylist",
+    },
+  ];
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) setIsScrolled(true);
+      else setIsScrolled(false);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  });
+  async function getAllAccounts() {
+    const res = await fetch(
+      `/api/account/get-all-accounts?id=${session?.user?.uid}`,
+      {
+        method: "GET",
       }
+    );
+
+    const data = await res.json();
+
+    console.log(data);
+
+    if (data && data.data && data.data.length) {
+      setAccounts(data.data);
+      setPageLoader(false);
+    } else {
+      setPageLoader(false);
     }
-  
-    useEffect(() => {
-      getAllAccounts();
-    }, []);
-    return <div className="relative">
-        <header
+  }
+
+  useEffect(() => {
+    getAllAccounts();
+  }, []);
+  return (
+    <div className="relative">
+      <header
         className={`header ${isScrolled && "bg-[#141414]"} hover:bg-[#141414]`}
       >
         <div className="flex items-center space-x-2 md:space-x-10">
@@ -131,14 +141,21 @@ export default function Navbar(){
           </div>
         </div>
       </header>
-      {
-        showAccountPopup && <AccountPopup 
-        accounts={accounts}
-        setPageLoader={setPageLoader}
-        signOut={signOut}
-        loggedInAccount={loggedInAccount}
-        setLoggedInAccount={setLoggedInAccount}
+      <DetailsPopup
+      show={showDetailsPopup}
+      setShow={setShowDetailsPopup}
+      
+      />
+
+      {showAccountPopup && (
+        <AccountPopup
+          accounts={accounts}
+          setPageLoader={setPageLoader}
+          signOut={signOut}
+          loggedInAccount={loggedInAccount}
+          setLoggedInAccount={setLoggedInAccount}
         />
-      }
+      )}
     </div>
+  );
 }
