@@ -9,19 +9,20 @@ export async function DELETE(req) {
     await connectToDB();
     const { searchParams } = new URL(req.url);
     const id = searchParams.get("id");
+
     if (!id) {
       return NextResponse.json({
         success: false,
-        message: "Favorite ID is mandatory",
+        message: "Favorite item ID is required",
       });
     }
 
-    const deleteFavoriteItem = await Favorites.findByIdAndDelete(id);
+    const deletedFavoriteItem = await Favorites.findByIdAndDelete(id);
 
-    if (deleteFavoriteItem) {
+    if (deletedFavoriteItem) {
       return NextResponse.json({
         success: true,
-        message: "Removed from List",
+        message: "Removed from you list",
       });
     } else {
       return NextResponse.json({

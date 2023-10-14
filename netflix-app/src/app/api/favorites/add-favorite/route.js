@@ -10,7 +10,7 @@ export async function POST(req) {
 
     const data = await req.json();
 
-    const isFavoriteAlreadyExists = await Account.find({
+    const isFavoriteAlreadyExists = await Favorites.find({
       uid: data.uid,
       movieID: data.movieID,
       accountID: data.accountID,
@@ -18,16 +18,16 @@ export async function POST(req) {
     if (isFavoriteAlreadyExists && isFavoriteAlreadyExists.length > 0) {
       return NextResponse.json({
         success: false,
-        message: "This is  already added to your Favorites",
+        message: "This is already added to your list",
       });
     }
 
-    const newlyAddedFavoite = await Favorites.create(data);
+    const newlyAddedFavorite = await Favorites.create(data);
 
-    if (newlyAddedFavoite) {
+    if (newlyAddedFavorite) {
       return NextResponse.json({
         success: true,
-        message: "Added to your favorite successfully",
+        message: "Added to your list successfully",
       });
     } else {
       return NextResponse.json({
