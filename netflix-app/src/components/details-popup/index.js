@@ -117,7 +117,7 @@ export default function DetailsPopup({ show, setShow }) {
         <div>
           <button
             onClick={handleClose}
-            className="modalButton flex items-center justify-center absolute top-5 right-5 bg-[#181818] hover:bg-[#181818] !z-40 border-none h-9 w-9 mr-[70px] mb-2 "
+            className="modalButton flex items-center justify-center absolute top-5 right-5 bg-[#181818] hover:bg-[#181818] !z-40 border-none h-9 w-9 "
           >
             <XMarkIcon className="h-6 w-6 " />
           </button>
