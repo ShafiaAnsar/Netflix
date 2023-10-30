@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { FcGoogle } from 'react-icons/fc';
+import { FaGithub } from 'react-icons/fa';
 
 const questions = [
   {
@@ -72,9 +74,19 @@ function UnauthBanner({ router }) {
           <div className="flex  justify-center">
             <button
               onClick={() => signIn("github")}
-              className="bg-red-600 hover:bg-[#e50914] p-4 rounded"
+              className=" flex flex-row items-center gap-2 justify-center  bg-red-600 hover:bg-[#e50914] p-4 rounded"
             >
-              Sign In to Get Started
+              <FaGithub size={32} />
+              Sign In with Github
+            </button>
+          </div>
+          <div className="flex  justify-center">
+            <button
+              onClick={() => signIn("google")}
+              className="bg-red-600 hover:bg-[#e50914] flex flex-row gap-2 justify-center items-end  p-4 rounded mt-4"
+            >
+               <FcGoogle size={32} />
+              Sign In with Google
             </button>
           </div>
         </div>
