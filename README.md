@@ -5,6 +5,7 @@ A full-stack Netflix clone built with React, Next.js, Tailwind CSS, and Prisma.
 - [Demo](#demo)
 - [Technologies Used](#technologies-used)
 - [Contact](#contact)
+## Home Page ![Screenshot (13)](https://github.com/ShafiaAnsar/Netflix/assets/92047387/3836735a-1af2-4913-b06d-831d3006bcb3)
 
 ## Features
 - **User Authentication:**
